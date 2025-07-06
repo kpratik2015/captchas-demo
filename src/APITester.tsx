@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { HCaptcha } from "./HCaptcha";
+import { GeeTestCaptcha } from "./GeeTestCaptcha";
 
 export function APITester() {
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
@@ -9,7 +10,6 @@ export function APITester() {
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const form = e.currentTarget;
       const formData = new FormData(form);
@@ -33,7 +33,12 @@ export function APITester() {
     <div className="api-tester">
       <form
         onSubmit={testEndpoint}
-        style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "center",
+        }}
       >
         <div className="endpoint-row">
           <select name="method" className="method">
@@ -51,18 +56,19 @@ export function APITester() {
             Send
           </button>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
+        <HCaptcha
+          onVerify={() =>
+            setCaptchaVerifiedState((p) => ({ ...p, hcaptcha: true }))
+          }
+        />
+        <GeeTestCaptcha
+          onVerify={() => {
+            setCaptchaVerifiedState((p) => ({
+              ...p,
+              geetest: (window as any).captchaObj.getValidate(),
+            }));
           }}
-        >
-          <HCaptcha
-            onVerify={() =>
-              setCaptchaVerifiedState((p) => ({ ...p, hcaptcha: true }))
-            }
-          />
-        </div>
+        />
       </form>
       <textarea
         ref={responseInputRef}
