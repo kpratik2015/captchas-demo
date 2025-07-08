@@ -11,6 +11,7 @@
     "start": "NODE_ENV=production bun src/index.tsx"
   },
   "dependencies": {
+    "@friendlycaptcha/sdk": "^0.1.24",
     "@hcaptcha/react-hcaptcha": "^1.12.0",
     "react": "^19",
     "react-dom": "^19"

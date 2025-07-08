@@ -1,11 +1,15 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useCallback, useRef, useState, type FormEvent } from "react";
 import { HCaptcha } from "./HCaptcha";
 import { GeeTestCaptcha } from "./GeeTestCaptcha";
+import { FriendlyCaptcha } from "./FriendlyCaptcha";
+import { WidgetErrorData } from "@friendlycaptcha/sdk";
 
 export function APITester() {
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
   const [captchaVerifiedState, setCaptchaVerifiedState] = useState({
     hcaptcha: false,
+    geetest: false,
+    friendlycaptcha: "FAILED",
   });
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
@@ -24,10 +28,19 @@ export function APITester() {
         null,
         2
       );
+      responseInputRef.current!.rows = 50;
     } catch (error) {
       responseInputRef.current!.value = String(error);
     }
   };
+
+  const onFriendlyCaptchaComplete = useCallback((response: string) => {
+    console.log("FriendlyCaptcha: onComplete", response);
+    setCaptchaVerifiedState((p) => ({
+      ...p,
+      friendlycaptcha: response,
+    }));
+  }, []);
 
   return (
     <div className="api-tester">
@@ -69,11 +82,15 @@ export function APITester() {
             }));
           }}
         />
+        <FriendlyCaptcha
+          sitekey={process.env.BUN_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY!}
+          onComplete={onFriendlyCaptchaComplete}
+        />
       </form>
       <textarea
         ref={responseInputRef}
         readOnly
-        placeholder="Response will appear here..."
+        placeholder="Do the captchas and then hit send to see the response..."
         className="response-area"
       />
     </div>

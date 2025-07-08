@@ -4,6 +4,7 @@
     "": {
       "name": "bun-react-template",
       "dependencies": {
+        "@friendlycaptcha/sdk": "^0.1.24",
         "@hcaptcha/react-hcaptcha": "^1.12.0",
         "react": "^19",
         "react-dom": "^19",
@@ -17,6 +18,8 @@
   },
   "packages": {
     "@babel/runtime": ["@babel/runtime@7.27.6", "", {}, "sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q=="],
+
+    "@friendlycaptcha/sdk": ["@friendlycaptcha/sdk@0.1.24", "", {}, "sha512-cGsY/Q6dl9pDQVRv1iSZmAOAls0mVcN6YETRx0Y+w/uUD9sOlPNg+oMFzgzkkVvH6+Sc4Oradv10UVr8ftNBtQ=="],
 
     "@hcaptcha/loader": ["@hcaptcha/loader@2.0.0", "", {}, "sha512-fFQH6ApU/zCCl6Y1bnbsxsp1Er/lKX+qlgljrpWDeFcenpEtoP68hExlKSXECospzKLeSWcr06cbTjlR/x3IJA=="],
 
